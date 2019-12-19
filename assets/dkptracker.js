@@ -63,7 +63,3 @@ class RaiderList {
 const raiderList = new RaiderList()
 raiderList.populateRaiderList()
 raiderList.render()
-
-const test = function(){
-  console.log('test!')
-}
