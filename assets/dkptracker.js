@@ -50,7 +50,7 @@ class RaiderList {
         <td>${raider.character}</td>
         <td>${raider.classType}</td>
         <td>${raider.dkp}</td>
-        <button>Edit DKP</button>
+        <td><button>Edit DKP</button></td>
       `;
       table.append(newRow)
       console.log(raider.character)
