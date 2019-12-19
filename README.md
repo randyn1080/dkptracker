@@ -1,5 +1,3 @@
 # dkptracker
 
-testing a change
-
-testing change push only to Randy
+DKP tracker for WoW Snapped Guild
