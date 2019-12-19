@@ -1,0 +1,17 @@
+th {
+    border: 1px solid red;
+    margin: 0 auto
+}
+
+tbody tr td{
+    border: 1px solid black;
+}
+
+.hunter{
+    background-color: green
+}
+
+.priest{
+    background-color: white;
+    color:black;
+}
