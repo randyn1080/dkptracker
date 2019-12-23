@@ -1,8 +1,8 @@
 class Raider {
 
-  character;
-  classType;
-  dkp;
+  character = String;
+  classType = String;
+  dkp = Number;
 
   constructor(character, classType, dkp){
     this.character = character
@@ -10,56 +10,24 @@ class Raider {
     this.dkp = dkp; 
   }
 
-}
+
+Zibooru = new Raider(
+  'Zibooru',
+  'Priest',
+  69
+);
+
+Hkimpact = new Raider(
+  'Hkimpact',
+  'Rogue',
+  150
+);
+
+Gwrath = new Raider(
+  'Gwrath',
+  'Hunter',
+  1
+);
 
 
-
-
-class RaiderList {
-
-  raiders = []
-
-  populateRaiderList(){
-    this.raiders = [
-      new Raider(
-        'Zibooru',
-        'Priest',
-        150
-      ),
-    
-      new Raider(
-        'Hkimpact',
-        'Rogue',
-        150
-      ),
-
-      new Raider(
-        'Gwrath',
-        'Hunter',
-        -500
-      )
-    ]
-  }
-
-  render(){
-
-    const table = document.querySelector('#tablebod')
-    for(const raider of this.raiders){
-      const newRow = document.createElement('tr')
-      newRow.innerHTML = `
-        <td>${raider.character}</td>
-        <td>${raider.classType}</td>
-        <td>${raider.dkp}</td>
-        <td><button>Edit DKP</button></td>
-      `;
-      table.append(newRow)
-      console.log(raider.character)
-    }
-    
-  }
-
-}
-
-const raiderList = new RaiderList()
-raiderList.populateRaiderList()
-raiderList.render()
+const 
