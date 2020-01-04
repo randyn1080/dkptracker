@@ -1,4 +1,3 @@
-
 // Databases?
 const raiders = {}
 const items = {}
