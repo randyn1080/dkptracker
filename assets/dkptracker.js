@@ -1,33 +1,100 @@
+
+// Databases?
+const raiders = {}
+const items = {}
+// --------------
+
+
 class Raider {
 
   character = String;
   classType = String;
   dkp = Number;
+  itemsPurchased = new Object;
 
   constructor(character, classType, dkp){
-    this.character = character
-    this.classType = classType
+    this.character = character;
+    this.classType = classType;
     this.dkp = dkp; 
+    this.itemsPurchased;
   }
 
+  static createRaider(raiderName, classType, dkp) {
+    const newRaider = new Raider (
+      raiderName,
+      classType,
+      dkp
+    );
+    raiders[raiderName] = newRaider
+  }
+  
+}
 
-Zibooru = new Raider(
+
+
+class Item {
+
+  itemName = String;
+  dkpValue = Number;
+
+  constructor(itemName, dkpVal) {
+    this.itemName = itemName;
+    this.dkpValue = dkpVal
+  }
+
+  static createItem(itemName, dkpVal) {
+    const newItem = new Item (
+      itemName,
+      dkpVal
+    )
+    items[itemName] = newItem
+  }
+
+}
+
+
+
+class LootTransactions {
+
+  purchase(item, dkpSpent) {
+    
+  }
+
+}
+
+class DkpAdjustmentTools {
+
+  dkpGain(value) {
+  
+  }
+
+  dkpReduce(value) {
+
+  }
+
+}
+
+
+
+Raider.createRaider(
   'Zibooru',
   'Priest',
-  69
+  9
 );
 
-Hkimpact = new Raider(
+Raider.createRaider(
+  'Gwrath',
+  'Hunter',
+  72
+);
+
+Raider.createRaider(
   'Hkimpact',
   'Rogue',
   150
 );
 
-Gwrath = new Raider(
-  'Gwrath',
-  'Hunter',
-  1
-);
-
-
-const 
+Item.createItem(
+  'Hand of Ragnaros',
+  75
+)
