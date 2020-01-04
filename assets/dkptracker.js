@@ -1,15 +1,17 @@
 // Databases?
-const raiders = {}
-const items = {}
+// const raiders = {}
+// const items = {}
 // --------------
 
 
 class Raider {
 
+  raiders = new Object();
+
   character = String;
   classType = String;
   dkp = Number;
-  itemsPurchased = new Object;
+  itemsPurchased = new Object();
 
   constructor(character, classType, dkp){
     this.character = character;
@@ -18,13 +20,33 @@ class Raider {
     this.itemsPurchased;
   }
 
-  static createRaider(raiderName, classType, dkp) {
+  createRaider(raiderName, classType, dkp) {
     const newRaider = new Raider (
       raiderName,
       classType,
       dkp
     );
-    raiders[raiderName] = newRaider
+    this.raiders[raiderName] = newRaider
+  }
+
+  populateRaiders(){
+    this.createRaider(
+      'Zibooru',
+      'Priest',
+      9
+    );
+    
+    this.createRaider(
+      'Gwrath',
+      'Hunter',
+      72
+    );
+    
+    this.createRaider(
+      'Hkimpact',
+      'Rogue',
+      150
+    );
   }
   
 }
@@ -33,20 +55,55 @@ class Raider {
 
 class Item {
 
-  itemName = String;
-  dkpValue = Number;
+  items = new Object();
 
-  constructor(itemName, dkpVal) {
+  id = Number
+  itemName = String;
+  dkpValHist = new Array();
+
+  constructor(id, itemName, dkpVal) {
+    this.id = id;
     this.itemName = itemName;
-    this.dkpValue = dkpVal
+    this.dkpValHist = [dkpVal];
   }
 
-  static createItem(itemName, dkpVal) {
+  createItem(id, itemName, dkpVal) {
     const newItem = new Item (
+      id,
       itemName,
       dkpVal
+    );
+    this.items[itemName] = newItem
+  }
+
+  randomIdAssignment(){
+    return Math.floor(Math.random()*100000)
+  }
+
+  populateItems() {
+    this.createItem(
+      this.randomIdAssignment(),
+      'Hand of Ragnaros',
+      75
+    );
+    
+    this.createItem(
+      this.randomIdAssignment(),
+      'Eye of Divinity',
+      15
+    );
+    
+    this.createItem(
+      this.randomIdAssignment(),
+      'Core Hound Tooth',
+      45
     )
-    items[itemName] = newItem
+    
+    this.createItem(
+      this.randomIdAssignment(),
+      'Yances Special Burger Patti',
+      102
+    )
   }
 
 }
@@ -55,11 +112,14 @@ class Item {
 
 class LootTransactions {
 
-  purchase(item, dkpSpent) {
-    
+  purchase() {
+
   }
 
+  // starter logic ?
+  // raiders.Zibooru.itemsPurchased = items['Eye of Divinity']
 }
+
 
 class DkpAdjustmentTools {
 
@@ -74,26 +134,71 @@ class DkpAdjustmentTools {
 }
 
 
+// class App {
 
-Raider.createRaider(
-  'Zibooru',
-  'Priest',
-  9
-);
+//   raid = new Raider()
+//   items = new Item()
 
-Raider.createRaider(
-  'Gwrath',
-  'Hunter',
-  72
-);
+//   static init(){
+//     raid.populateRaiders()
+//     items.populateItems()
+//   }
 
-Raider.createRaider(
-  'Hkimpact',
-  'Rogue',
-  150
-);
+// }
 
-Item.createItem(
-  'Hand of Ragnaros',
-  75
-)
+// App.init()
+
+const raid = new Raider();
+const items = new Item();
+raid.populateRaiders()
+items.populateItems()
+
+
+
+// ================= POPULATE RAIDERS
+
+
+// Raider.createRaider(
+//   'Zibooru',
+//   'Priest',
+//   9
+// );
+
+// Raider.createRaider(
+//   'Gwrath',
+//   'Hunter',
+//   72
+// );
+
+// Raider.createRaider(
+//   'Hkimpact',
+//   'Rogue',
+//   150
+// );
+
+
+// ====================== POPULATE ITEMS
+
+// Item.createItem(
+//   Item.randomIdAssignment(),
+//   'Hand of Ragnaros',
+//   75
+// );
+
+// Item.createItem(
+//   Item.randomIdAssignment(),
+//   'Eye of Divinity',
+//   15
+// );
+
+// Item.createItem(
+//   Item.randomIdAssignment(),
+//   'Core Hound Tooth',
+//   45
+// )
+
+// Item.createItem(
+//   Item.randomIdAssignment(),
+//   'Yances Special Burger Patti',
+//   102
+// )
