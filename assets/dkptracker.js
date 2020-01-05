@@ -6,8 +6,6 @@
 
 class Raider {
 
-  raiders = new Object();
-
   character = String;
   classType = String;
   dkp = Number;
@@ -28,8 +26,26 @@ class Raider {
     );
     this.raiders[raiderName] = newRaider
   }
+  
+}
+
+
+
+class RaiderList extends Raider{
+
+  constructor() {
+    super()
+  }
+
+  raiders = new Object();
 
   populateRaiders(){
+    this.createRaider(
+      'Manikan',
+      'Priest',
+      99
+    );
+
     this.createRaider(
       'Zibooru',
       'Priest',
@@ -48,14 +64,12 @@ class Raider {
       150
     );
   }
-  
+
 }
 
 
 
 class Item {
-
-  items = new Object();
 
   id = Number
   itemName = String;
@@ -80,6 +94,18 @@ class Item {
     return Math.floor(Math.random()*100000)
   }
 
+}
+
+
+
+class ItemsList extends Item{
+
+  constructor(){
+    super()
+  }
+
+  items = new Object()
+
   populateItems() {
     this.createItem(
       this.randomIdAssignment(),
@@ -103,7 +129,7 @@ class Item {
       this.randomIdAssignment(),
       'Yances Special Burger Patti',
       102
-    )
+    );
   }
 
 }
@@ -148,60 +174,12 @@ class DkpAdjustmentTools {
 
 // App.init()
 
-const raid = new Raider();
-const items = new Item();
-raid.populateRaiders()
-items.populateItems()
+const raiderList = new RaiderList();
+const itemsList = new ItemsList();
+raiderList.populateRaiders()
+itemsList.populateItems()
 
 
-
-// ================= POPULATE RAIDERS
-
-
-// Raider.createRaider(
-//   'Zibooru',
-//   'Priest',
-//   9
-// );
-
-// Raider.createRaider(
-//   'Gwrath',
-//   'Hunter',
-//   72
-// );
-
-// Raider.createRaider(
-//   'Hkimpact',
-//   'Rogue',
-//   150
-// );
-
-
-// ====================== POPULATE ITEMS
-
-// Item.createItem(
-//   Item.randomIdAssignment(),
-//   'Hand of Ragnaros',
-//   75
-// );
-
-// Item.createItem(
-//   Item.randomIdAssignment(),
-//   'Eye of Divinity',
-//   15
-// );
-
-// Item.createItem(
-//   Item.randomIdAssignment(),
-//   'Core Hound Tooth',
-//   45
-// )
-
-// Item.createItem(
-//   Item.randomIdAssignment(),
-//   'Yances Special Burger Patti',
-//   102
-// )
 
 
 // class RaiderList {
