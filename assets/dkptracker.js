@@ -138,12 +138,10 @@ class ItemsList extends Item{
 
 class LootTransactions {
 
-  purchase() {
-
+  purchase(purchaser, itemPurchased, dkpValSpent) {
+    // listOfRaiders.Zibooru.itemsPurchased['Eye of Divinity'] = listOfItems['Eye of Divinity']
   }
 
-  // starter logic ?
-  // raiders.Zibooru.itemsPurchased = items['Eye of Divinity']
 }
 
 
@@ -176,9 +174,11 @@ class DkpAdjustmentTools {
 
 const raiderList = new RaiderList();
 const itemsList = new ItemsList();
-raiderList.populateRaiders()
-itemsList.populateItems()
+raiderList.populateRaiders();
+itemsList.populateItems();
 
+const listOfItems = itemsList.items;
+const listOfRaiders = raiderList.raiders;
 
 
 
