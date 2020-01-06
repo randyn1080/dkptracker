@@ -73,12 +73,12 @@ class Item {
 
   id = Number
   itemName = String;
-  dkpValHist = new Array();
+  dkpValHist = new Object();
 
   constructor(id, itemName, dkpVal) {
     this.id = id;
     this.itemName = itemName;
-    this.dkpValHist = [dkpVal];
+    this.dkpValHist = {Starting_Price:dkpVal};
   }
 
   createItem(id, itemName, dkpVal) {
@@ -110,25 +110,25 @@ class ItemsList extends Item{
     this.createItem(
       this.randomIdAssignment(),
       'Hand of Ragnaros',
-      75
+      35
     );
     
     this.createItem(
       this.randomIdAssignment(),
       'Eye of Divinity',
-      15
+      25
     );
     
     this.createItem(
       this.randomIdAssignment(),
       'Core Hound Tooth',
-      45
+      20
     );
     
     this.createItem(
       this.randomIdAssignment(),
       'Yances Special Burger Patti',
-      102
+      15
     );
   }
 
@@ -136,13 +136,15 @@ class ItemsList extends Item{
 
 
 
-class LootTransactions {
+class LootTransactions extends DkpAdjustmentTools { // add logic to adjust DKP based on the dkpValSpent for a purchased item
 
-  purchase(purchaser, itemPurchased, dkpValSpent) {
-    // listOfRaiders.Zibooru.itemsPurchased['Eye of Divinity'] = listOfItems['Eye of Divinity']
+  static purchase(purchaser, itemPurchased, dkpValSpent) {
+    listOfItems[itemPurchased].dkpValHist[purchaser] = {purchaser:purchaser, dkpSpent:dkpValSpent}
+    listOfRaiders[purchaser].itemsPurchased[itemPurchased] = listOfItems[itemPurchased]
   }
 
 }
+
 
 
 class DkpAdjustmentTools {
