@@ -31,6 +31,35 @@ class Raider {
 
 
 
+class Item {
+
+  id = Number
+  itemName = String;
+  dkpValHist = new Object();
+
+  constructor(id, itemName, dkpVal) {
+    this.id = id;
+    this.itemName = itemName;
+    this.dkpValHist = {Starting_Price:dkpVal};
+  }
+
+  createItem(id, itemName, dkpVal) {
+    const newItem = new Item (
+      id,
+      itemName,
+      dkpVal
+    );
+    this.items[itemName] = newItem
+  }
+
+  randomIdAssignment(){
+    return Math.floor(Math.random()*100000)
+  }
+
+}
+
+
+
 class RaiderList extends Raider{
 
   constructor() {
@@ -63,35 +92,6 @@ class RaiderList extends Raider{
       'Rogue',
       150
     );
-  }
-
-}
-
-
-
-class Item {
-
-  id = Number
-  itemName = String;
-  dkpValHist = new Object();
-
-  constructor(id, itemName, dkpVal) {
-    this.id = id;
-    this.itemName = itemName;
-    this.dkpValHist = {Starting_Price:dkpVal};
-  }
-
-  createItem(id, itemName, dkpVal) {
-    const newItem = new Item (
-      id,
-      itemName,
-      dkpVal
-    );
-    this.items[itemName] = newItem
-  }
-
-  randomIdAssignment(){
-    return Math.floor(Math.random()*100000)
   }
 
 }
@@ -136,17 +136,6 @@ class ItemsList extends Item{
 
 
 
-class LootTransactions extends DkpAdjustmentTools { // add logic to adjust DKP based on the dkpValSpent for a purchased item
-
-  static purchase(purchaser, itemPurchased, dkpValSpent) {
-    listOfItems[itemPurchased].dkpValHist[purchaser] = {purchaser:purchaser, dkpSpent:dkpValSpent}
-    listOfRaiders[purchaser].itemsPurchased[itemPurchased] = listOfItems[itemPurchased]
-  }
-
-}
-
-
-
 class DkpAdjustmentTools {
 
   dkpGain(value) {
@@ -158,6 +147,18 @@ class DkpAdjustmentTools {
   }
 
 }
+
+
+
+class LootTransactions extends DkpAdjustmentTools { // add logic to adjust DKP based on the dkpValSpent for a purchased item
+
+  static purchase(purchaser, itemPurchased, dkpValSpent) {
+    listOfItems[itemPurchased].dkpValHist[purchaser] = {purchaser:purchaser, dkpSpent:dkpValSpent}
+    listOfRaiders[purchaser].itemsPurchased[itemPurchased] = listOfItems[itemPurchased]
+  }
+
+}
+
 
 
 // class App {
