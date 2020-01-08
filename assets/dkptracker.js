@@ -9,7 +9,7 @@ class Raider {
   character = String;
   classType = String;
   dkp = Number;
-  itemsPurchased = new Object();
+  itemsPurchased = [];
 
   constructor(character, classType, dkp){
     this.character = character;
@@ -40,7 +40,10 @@ class Item {
   constructor(id, itemName, dkpVal) {
     this.id = id;
     this.itemName = itemName;
-    this.dkpValHist = {Starting_Price:dkpVal};
+    this.dkpValHist = [{
+      purchaser:'Starting Price',
+      DkpValue:dkpVal
+    }];
   }
 
   createItem(id, itemName, dkpVal) {
@@ -66,7 +69,7 @@ class RaiderList extends Raider{
     super()
   }
 
-  raiders = new Object();
+  raiders = {};
 
   populateRaiders(){
     this.createRaider(
@@ -104,7 +107,7 @@ class ItemsList extends Item{
     super()
   }
 
-  items = new Object()
+  items = {}
 
   populateItems() {
     this.createItem(
@@ -153,8 +156,13 @@ class DkpAdjustmentTools {
 class LootTransactions extends DkpAdjustmentTools { // add logic to adjust DKP based on the dkpValSpent for a purchased item
 
   static purchase(purchaser, itemPurchased, dkpValSpent) {
-    listOfItems[itemPurchased].dkpValHist[purchaser] = {purchaser:purchaser, dkpSpent:dkpValSpent}
-    listOfRaiders[purchaser].itemsPurchased[itemPurchased] = listOfItems[itemPurchased]
+
+    listOfItems[itemPurchased].dkpValHist.push({purchaser:purchaser, DkpValue:dkpValSpent});
+
+    // listOfRaiders[purchaser].itemsPurchased[itemPurchased] = listOfItems[itemPurchased]
+
+    listOfRaiders[purchaser].itemsPurchased.push(listOfItems[itemPurchased]);
+
   }
 
 }
