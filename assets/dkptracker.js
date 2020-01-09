@@ -76,6 +76,22 @@ class Item {
     }
     return +(purchasesAmountArr.reduce((a,b)=>a+b) / numOfPurchases).toFixed(2)
   }
+  
+}
+
+
+
+class LootTransactions { // add logic to adjust DKP based on the dkpValSpent for a purchased item
+
+  static purchase(purchaser, itemPurchased, dkpValSpent) {
+
+    listOfItems[itemPurchased].dkpValHist.push({purchaser:purchaser, DkpValue:dkpValSpent});
+
+    listOfRaiders[purchaser].itemsPurchased.push(listOfItems[itemPurchased]);
+
+    listOfRaiders[purchaser].dkpSubtract(dkpValSpent)
+
+  }
 
 }
 
@@ -168,22 +184,6 @@ class ItemsList extends Item{
 //   }
 
 // }
-
-
-
-class LootTransactions { // add logic to adjust DKP based on the dkpValSpent for a purchased item
-
-  static purchase(purchaser, itemPurchased, dkpValSpent) {
-
-    listOfItems[itemPurchased].dkpValHist.push({purchaser:purchaser, DkpValue:dkpValSpent});
-
-    listOfRaiders[purchaser].itemsPurchased.push(listOfItems[itemPurchased]);
-
-    listOfRaiders[purchaser].dkpSubtract(dkpValSpent)
-
-  }
-
-}
 
 
 
