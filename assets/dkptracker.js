@@ -65,17 +65,17 @@ class Raider {
   
   
   
-  class Item {
+class Item {
     
-    id = Number
-    itemName = String;
-    dkpValHist = [];
+  id = Number
+  itemName = String;
+  dkpValHist = [];
     
-    constructor(id, itemName, dkpVal) {
-      this.id = id;
-      this.itemName = itemName;
-      this.dkpValHist = [{
-        purchaser:'Starting Price',
+  constructor(id, itemName, dkpVal) {
+    this.id = id;
+    this.itemName = itemName;
+    this.dkpValHist = [{
+      purchaser:'Starting Price',
       DkpValue:dkpVal
     }];
   }
@@ -85,83 +85,83 @@ class Raider {
       id,
       itemName,
       dkpVal
-      );
-      this.items[itemName] = newItem
-    }
+    );
+    this.items[itemName] = newItem
+  }
     
-    randomIdAssignment(){
-      return Math.floor(Math.random()*100000)
-    }
+  randomIdAssignment(){
+    return Math.floor(Math.random()*100000)
+  }
     
-    averageDkpSpent() {
-      const numOfPurchases = this.dkpValHist.length - 1
-      const purchasesAmountArr = []
-      for (let i = 1; i <= numOfPurchases; i++) {
-        purchasesAmountArr.push(this.dkpValHist[i].DkpValue)
-        console.log(this.dkpValHist[i].DkpValue)
-      }
-      return +(purchasesAmountArr.reduce((a,b)=>a+b) / numOfPurchases).toFixed(2)
+  averageDkpSpent() {
+    const numOfPurchases = this.dkpValHist.length - 1
+    const purchasesAmountArr = []
+    for (let i = 1; i <= numOfPurchases; i++) {
+      purchasesAmountArr.push(this.dkpValHist[i].DkpValue)
+      console.log(this.dkpValHist[i].DkpValue)
     }
+    return +(purchasesAmountArr.reduce((a,b)=>a+b) / numOfPurchases).toFixed(2)
+  }
     
   }
   
   
   
-  class LootTransactions { // add logic to adjust DKP based on the dkpValSpent for a purchased item
+class LootTransactions { // add logic to adjust DKP based on the dkpValSpent for a purchased item
     
-    static purchase(purchaser, itemPurchased, dkpValSpent) {
-      
-      listOfItems[itemPurchased].dkpValHist.push({purchaser:purchaser, DkpValue:dkpValSpent});
-      
-      listOfRaiders[purchaser].itemsPurchased.push(listOfItems[itemPurchased]);
-      
-      listOfRaiders[purchaser].dkpSubtract(dkpValSpent)
-      
-    }
+  static purchase(purchaser, itemPurchased, dkpValSpent) {
+    
+    listOfItems[itemPurchased].dkpValHist.push({purchaser:purchaser, DkpValue:dkpValSpent});
+    
+    listOfRaiders[purchaser].itemsPurchased.push(listOfItems[itemPurchased]);
+    
+    listOfRaiders[purchaser].dkpSubtract(dkpValSpent)
     
   }
+  
+}
 
 
 
-  class BossList extends Boss {
+class BossList extends Boss {
   
-    constructor() {
-      super()
-    }
-  
-    bosses = {};
-  
-    populateBosses() {
-      this.createBoss(
-        'Ragnaros',
-        3
-      );
-  
-      this.createBoss(
-        'Onyxia',
-        3
-      );
-  
-      this.createBoss(
-        'Magmadar',
-        3
-      );
-  
-      this.createBoss(
-        'Lucifron'
-      );
-  
-    }
-  
+  constructor() {
+    super()
   }
+
+  bosses = {};
+
+  populateBosses() {
+    this.createBoss(
+      'Ragnaros',
+      3
+    );
+
+    this.createBoss(
+      'Onyxia',
+      3
+    );
+
+    this.createBoss(
+      'Magmadar',
+      3
+    );
+
+    this.createBoss(
+      'Lucifron'
+    );
+
+  }
+
+}
   
   
   
-  class RaiderList extends Raider{
+class RaiderList extends Raider{
     
-    constructor() {
-      super()
-    }
+  constructor() {
+    super()
+  }
     
   raiders = {};
 
@@ -233,30 +233,51 @@ class ItemsList extends Item{
 
 
 
+// create instances
+const raiderList = new RaiderList();
+const itemsList = new ItemsList();
+const bossList = new BossList()
+
+// populate lists
+raiderList.populateRaiders();
+itemsList.populateItems();
+bossList.populateBosses();
+
+// tie lists to simple constant
+const listOfItems = itemsList.items;
+const listOfRaiders = raiderList.raiders;
+const listOfBosses = bossList.bosses;
+
+
+
+// ================================
+// need to understand how to make this work.  Possible it will only work once I begin to render things?
+// ================================
+
 // class App {
 
-//   raid = new Raider()
-//   items = new Item()
-
 //   static init(){
-//     raid.populateRaiders()
-//     items.populateItems()
+//     const raiderList = new RaiderList();
+//     const itemsList = new ItemsList()
+//     const bossList = new BossList();
+
+//     raiderList.populateRaiders()
+//     itemsList.populateItems()
+//     bossList.populateBosses()
 //   }
 
 // }
 
 // App.init()
 
-const raiderList = new RaiderList();
-const itemsList = new ItemsList();
-const bossList = new BossList()
-raiderList.populateRaiders();
-itemsList.populateItems();
-bossList.populateBosses();
 
-const listOfItems = itemsList.items;
-const listOfRaiders = raiderList.raiders;
-const listOfBosses = bossList.bosses;
+
+//===================================
+
+// FUTURE LOGIC TO RENDER INFO TO PAGE
+
+//====================================
+
 
 
 // class RaiderList {
