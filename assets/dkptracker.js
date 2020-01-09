@@ -4,6 +4,22 @@
 // --------------
 
 
+class Boss{ // create a button to be displayed on page PER BOSS that when clicked will create a popup that will accept a CSV list of raiders.  When that input is accepted, distribute the dkpValue of the boss to everyone as a dkpGain.
+
+  // following that event, create a similar yet smaller (contained) popup of buttons containing the boss's loot table.  When a loot Item is clicked, create an input field to accept a Raider and a dkpVal to automatically pass to LootTransactions.purchase(Raider, Item, DkpVal).
+
+  bossName = String;
+  dkpValue = Number;
+  lootTable = []
+
+  constructor(name, dkpVal) {
+    this.bossName = name;
+    this.dkpValue = dkpVal
+  }
+
+}
+
+
 class Raider {
 
   character = String;
