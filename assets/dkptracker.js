@@ -15,18 +15,28 @@ class Boss{ // create a button to be displayed on page PER BOSS that when clicke
   constructor(name, dkpVal) {
     this.bossName = name;
     this.dkpValue = dkpVal
+    this.lootTable = [];
+  }
+
+  createBoss(boss, dkpVal) {
+    const newBoss = new Boss(
+      boss,
+      dkpVal
+    )
+    this.bosses[boss] = newBoss
   }
 
 }
 
 
-class Raider {
 
+class Raider {
+  
   character = String;
   classType = String;
   dkp = Number;
   itemsPurchased = [];
-
+  
   constructor(character, classType, dkp){
     this.character = character;
     this.classType = classType;
@@ -39,86 +49,120 @@ class Raider {
       raiderName,
       classType,
       dkp
-    );
-    this.raiders[raiderName] = newRaider
-  }
-
-  dkpSubtract(val) {
-    this.dkp = this.dkp - val
-  }
-
-  dkpAdd(val) {
-    this.dkp = this.dkp + val
+      );
+      this.raiders[raiderName] = newRaider
+    }
+    
+    dkpSubtract(val) {
+      this.dkp = this.dkp - val
+    }
+    
+    dkpAdd(val) {
+      this.dkp = this.dkp + val
+    }
+    
   }
   
-}
-
-
-
-class Item {
-
-  id = Number
-  itemName = String;
-  dkpValHist = new Object();
-
-  constructor(id, itemName, dkpVal) {
-    this.id = id;
-    this.itemName = itemName;
-    this.dkpValHist = [{
-      purchaser:'Starting Price',
+  
+  
+  class Item {
+    
+    id = Number
+    itemName = String;
+    dkpValHist = [];
+    
+    constructor(id, itemName, dkpVal) {
+      this.id = id;
+      this.itemName = itemName;
+      this.dkpValHist = [{
+        purchaser:'Starting Price',
       DkpValue:dkpVal
     }];
   }
-
+  
   createItem(id, itemName, dkpVal) {
     const newItem = new Item (
       id,
       itemName,
       dkpVal
-    );
-    this.items[itemName] = newItem
-  }
-
-  randomIdAssignment(){
-    return Math.floor(Math.random()*100000)
-  }
-
-  averageDkpSpent() {
-    const numOfPurchases = this.dkpValHist.length - 1
-    const purchasesAmountArr = []
-    for (let i = 1; i <= numOfPurchases; i++) {
-      purchasesAmountArr.push(this.dkpValHist[i].DkpValue)
-      console.log(this.dkpValHist[i].DkpValue)
+      );
+      this.items[itemName] = newItem
     }
-    return +(purchasesAmountArr.reduce((a,b)=>a+b) / numOfPurchases).toFixed(2)
+    
+    randomIdAssignment(){
+      return Math.floor(Math.random()*100000)
+    }
+    
+    averageDkpSpent() {
+      const numOfPurchases = this.dkpValHist.length - 1
+      const purchasesAmountArr = []
+      for (let i = 1; i <= numOfPurchases; i++) {
+        purchasesAmountArr.push(this.dkpValHist[i].DkpValue)
+        console.log(this.dkpValHist[i].DkpValue)
+      }
+      return +(purchasesAmountArr.reduce((a,b)=>a+b) / numOfPurchases).toFixed(2)
+    }
+    
   }
   
-}
-
-
-
-class LootTransactions { // add logic to adjust DKP based on the dkpValSpent for a purchased item
-
-  static purchase(purchaser, itemPurchased, dkpValSpent) {
-
-    listOfItems[itemPurchased].dkpValHist.push({purchaser:purchaser, DkpValue:dkpValSpent});
-
-    listOfRaiders[purchaser].itemsPurchased.push(listOfItems[itemPurchased]);
-
-    listOfRaiders[purchaser].dkpSubtract(dkpValSpent)
-
+  
+  
+  class LootTransactions { // add logic to adjust DKP based on the dkpValSpent for a purchased item
+    
+    static purchase(purchaser, itemPurchased, dkpValSpent) {
+      
+      listOfItems[itemPurchased].dkpValHist.push({purchaser:purchaser, DkpValue:dkpValSpent});
+      
+      listOfRaiders[purchaser].itemsPurchased.push(listOfItems[itemPurchased]);
+      
+      listOfRaiders[purchaser].dkpSubtract(dkpValSpent)
+      
+    }
+    
   }
 
-}
 
 
-
-class RaiderList extends Raider{
-
-  constructor() {
-    super()
+  class BossList extends Boss {
+  
+    constructor() {
+      super()
+    }
+  
+    bosses = {};
+  
+    populateBosses() {
+      this.createBoss(
+        'Ragnaros',
+        3
+      );
+  
+      this.createBoss(
+        'Onyxia',
+        3
+      );
+  
+      this.createBoss(
+        'Magmadar',
+        3
+      );
+  
+      this.createBoss(
+        'Lucifron'
+      );
+  
+    }
+  
   }
-
+  
+  
+  
+  class RaiderList extends Raider{
+    
+    constructor() {
+      super()
+    }
+    
   raiders = {};
 
   populateRaiders(){
@@ -189,20 +233,6 @@ class ItemsList extends Item{
 
 
 
-// class DkpAdjustmentTools {
-
-//   dkpGain(value) {
-  
-//   }
-
-//   dkpReduce(value) {
-
-//   }
-
-// }
-
-
-
 // class App {
 
 //   raid = new Raider()
@@ -219,12 +249,14 @@ class ItemsList extends Item{
 
 const raiderList = new RaiderList();
 const itemsList = new ItemsList();
+const bossList = new BossList()
 raiderList.populateRaiders();
 itemsList.populateItems();
+bossList.populateBosses();
 
 const listOfItems = itemsList.items;
 const listOfRaiders = raiderList.raiders;
-
+const listOfBosses = bossList.bosses;
 
 
 // class RaiderList {
