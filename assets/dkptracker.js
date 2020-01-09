@@ -26,6 +26,14 @@ class Raider {
     );
     this.raiders[raiderName] = newRaider
   }
+
+  dkpSubtract(val) {
+    this.dkp = this.dkp - val
+  }
+
+  dkpAdd(val) {
+    this.dkp = this.dkp + val
+  }
   
 }
 
@@ -57,6 +65,16 @@ class Item {
 
   randomIdAssignment(){
     return Math.floor(Math.random()*100000)
+  }
+
+  averageDkpSpent() {
+    const numOfPurchases = this.dkpValHist.length - 1
+    const purchasesAmountArr = []
+    for (let i = 1; i <= numOfPurchases; i++) {
+      purchasesAmountArr.push(this.dkpValHist[i].DkpValue)
+      console.log(this.dkpValHist[i].DkpValue)
+    }
+    return +(purchasesAmountArr.reduce((a,b)=>a+b) / numOfPurchases).toFixed(2)
   }
 
 }
@@ -139,29 +157,29 @@ class ItemsList extends Item{
 
 
 
-class DkpAdjustmentTools {
+// class DkpAdjustmentTools {
 
-  dkpGain(value) {
+//   dkpGain(value) {
   
-  }
+//   }
 
-  dkpReduce(value) {
+//   dkpReduce(value) {
 
-  }
+//   }
 
-}
+// }
 
 
 
-class LootTransactions extends DkpAdjustmentTools { // add logic to adjust DKP based on the dkpValSpent for a purchased item
+class LootTransactions { // add logic to adjust DKP based on the dkpValSpent for a purchased item
 
   static purchase(purchaser, itemPurchased, dkpValSpent) {
 
     listOfItems[itemPurchased].dkpValHist.push({purchaser:purchaser, DkpValue:dkpValSpent});
 
-    // listOfRaiders[purchaser].itemsPurchased[itemPurchased] = listOfItems[itemPurchased]
-
     listOfRaiders[purchaser].itemsPurchased.push(listOfItems[itemPurchased]);
+
+    listOfRaiders[purchaser].dkpSubtract(dkpValSpent)
 
   }
 
