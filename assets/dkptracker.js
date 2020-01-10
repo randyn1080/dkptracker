@@ -10,20 +10,34 @@ class Boss{ // create a button to be displayed on page PER BOSS that when clicke
 
   bossName = String;
   dkpValue = Number;
-  lootTable = []
+  lootTable;
 
-  constructor(name, dkpVal) {
+  constructor(name, dkpVal, ...items) {
     this.bossName = name;
     this.dkpValue = dkpVal
-    this.lootTable = [];
+    this.lootTable = items;
   }
 
-  createBoss(boss, dkpVal) {
+  createBoss(boss, dkpVal, ...items) {
     const newBoss = new Boss(
       boss,
-      dkpVal
+      dkpVal,
+      ...items
     )
     this.bosses[boss] = newBoss
+  }
+
+  listBossLootTable() {
+    this.lootTable.forEach((lootTblObj, indx) =>
+      console.log(`ID #${lootTblObj.id} : ${lootTblObj.itemName} at index ${indx}`)
+    )
+  }
+
+  bossKill(raidersPresent) {
+    const raidersPres = raidersPresent.split(';')
+    for (const raiders of raidersPres) {
+      listOfRaiders[raiders].dkpAdd(this.dkpValue)
+    }
   }
 
 }
@@ -53,15 +67,15 @@ class Raider {
       this.raiders[raiderName] = newRaider
     }
     
-    dkpSubtract(val) {
-      this.dkp = this.dkp - val
-    }
-    
-    dkpAdd(val) {
-      this.dkp = this.dkp + val
-    }
-    
+  dkpSubtract(val) {
+    this.dkp = this.dkp - val
   }
+    
+  dkpAdd(val) {
+    this.dkp = this.dkp + val
+  }
+    
+}
   
   
   
@@ -103,7 +117,7 @@ class Item {
     return +(purchasesAmountArr.reduce((a,b)=>a+b) / numOfPurchases).toFixed(2)
   }
     
-  }
+}
   
   
   
@@ -134,23 +148,37 @@ class BossList extends Boss {
   populateBosses() {
     this.createBoss(
       'Ragnaros',
-      3
+      3,
+      listOfItems['Hand of Ragnaros'],
+      listOfItems['Leggings of Transcendence'],
+      listOfItems['Perdition\'s Blade'],
+      listOfItems['Bonereaver\'s Edge']
+    );
+
+    this.createBoss(
+      'Majordomo',
+      3,
+      listOfItems['Core Hound Tooth'],
+      listOfItems['Eye of Divinity'],
+      listOfItems['Ancient Petrified Leaf']
     );
 
     this.createBoss(
       'Onyxia',
-      3
+      3,
+      listOfItems['Yances Special Burger Patti'],
+      listOfItems['Ancient Cornerstone Grimoire'],
+      listOfItems['Nemesis Skullcap'],
+      listOfItems['Netherwind Crown']
     );
 
     this.createBoss(
       'Magmadar',
-      3
+      3,
+      listOfItems['Striker\'s Mark'],
+      listOfItems['Cenarion Leggings'],
+      listOfItems['Arcanist Leggings']
     );
-
-    this.createBoss(
-      'Lucifron'
-    );
-
   }
 
 }
@@ -207,7 +235,13 @@ class ItemsList extends Item{
     this.createItem(
       this.randomIdAssignment(),
       'Hand of Ragnaros',
-      35
+      35,
+    );
+
+    this.createItem(
+      this.randomIdAssignment(),
+      'Ancient Petrified Leaf',
+      25
     );
     
     this.createItem(
@@ -227,6 +261,60 @@ class ItemsList extends Item{
       'Yances Special Burger Patti',
       15
     );
+
+    this.createItem(
+      this.randomIdAssignment(),
+      'Leggings of Transcendence',
+      20
+    );
+
+    this.createItem(
+      this.randomIdAssignment(),
+      'Perdition\'s Blade',
+      25
+    );
+
+    this.createItem(
+      this.randomIdAssignment(),
+      'Bonereaver\'s Edge',
+      25
+    );
+
+    this.createItem(
+      this.randomIdAssignment(),
+      'Ancient Cornerstone Grimoire',
+      15
+    );
+    
+    this.createItem(
+      this.randomIdAssignment(),
+      'Nemesis Skullcap',
+      20
+    );
+
+    this.createItem(
+      this.randomIdAssignment(),
+      'Netherwind Crown',
+      20
+    );
+
+    this.createItem(
+      this.randomIdAssignment(),
+      'Striker\'s Mark',
+      15
+    );
+
+    this.createItem(
+      this.randomIdAssignment(),
+      'Cenarion Leggings',
+      15
+    );
+
+    this.createItem(
+      this.randomIdAssignment(),
+      'Arcanist Leggings',
+      15
+    )
   }
 
 }
@@ -236,19 +324,21 @@ class ItemsList extends Item{
 // create instances
 const raiderList = new RaiderList();
 const itemsList = new ItemsList();
-const bossList = new BossList()
+
 
 // populate lists
 raiderList.populateRaiders();
 itemsList.populateItems();
-bossList.populateBosses();
 
-// tie lists to simple constant
+
+// tie lists to simple constants for testing
 const listOfItems = itemsList.items;
 const listOfRaiders = raiderList.raiders;
+
+// boss lists depend on item lists, so we must do these last.
+const bossList = new BossList()
+bossList.populateBosses();
 const listOfBosses = bossList.bosses;
-
-
 
 // ================================
 // need to understand how to make this work.  Possible it will only work once I begin to render things?
