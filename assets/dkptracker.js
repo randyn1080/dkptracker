@@ -251,6 +251,34 @@ class RaiderList extends Raider{
     );
   }
 
+  render(){
+
+    const table = document.querySelector('#tablebod')
+    for(const raider in this.raiders){
+      const newRow = document.createElement('tr')
+      newRow.innerHTML = `
+        <td>${this.raiders[raider].character}</td>
+        <td>${this.raiders[raider].classType}</td>
+        <td>${this.raiders[raider].dkp}</td>
+        <td><button id="AddDkpBtn">Add DKP</button></td>
+        <td><button id="SubDkpBtn">Subtract DKP</button></td>
+      `;
+      table.append(newRow)
+
+      const addBtnHandler = document.querySelector('#AddDkpBtn')
+      const subBtnHandler = document.querySelector('#SubDkpBtn')
+
+      // addBtnHandler.addEventListener('click',console.dir(this.raiders[raider]))
+      // subBtnHandler.addEventListener('click',console.dir(this.raiders[raider]))
+
+      addBtnHandler.addEventListener('click',console.log(this).bind(this.raiders[raider]))
+      subBtnHandler.addEventListener('click',console.log(this).bind(this.raiders[raider]))
+
+      console.log(raider.character)
+    }
+    
+  }
+
 }
 
 
@@ -372,6 +400,8 @@ const bossList = new BossList()
 bossList.populateBosses();
 const listOfBosses = bossList.bosses;
 
+raiderList.render()
+
 // ================================
 // need to understand how to make this work.  Possible it will only work once I begin to render things?
 // ================================
@@ -428,22 +458,22 @@ const listOfBosses = bossList.bosses;
 //     ]
 //   }
 
-//   render(){
+  // render(){
 
-//     const table = document.querySelector('#tablebod')
-//     for(const raider of this.raiders){
-//       const newRow = document.createElement('tr')
-//       newRow.innerHTML = `
-//         <td>${raider.character}</td>
-//         <td>${raider.classType}</td>
-//         <td>${raider.dkp}</td>
-//         <td><button>Edit DKP</button></td>
-//       `;
-//       table.append(newRow)
-//       console.log(raider.character)
-//     }
+  //   const table = document.querySelector('#tablebod')
+  //   for(const raider of this.raiders){
+  //     const newRow = document.createElement('tr')
+  //     newRow.innerHTML = `
+  //       <td>${raider.character}</td>
+  //       <td>${raider.classType}</td>
+  //       <td>${raider.dkp}</td>
+  //       <td><button>Edit DKP</button></td>
+  //     `;
+  //     table.append(newRow)
+  //     console.log(raider.character)
+  //   }
     
-//   }
+  // }
 
 // }
 
