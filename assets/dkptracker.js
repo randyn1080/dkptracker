@@ -91,10 +91,12 @@ class Raider {
     
   dkpSubtract(val) {
     this.dkp = this.dkp - val
+    console.log(`Subtract called! for ${this.character}`)
   }
     
   dkpAdd(val) {
     this.dkp = this.dkp + val
+    console.log(`Add called! for ${this.character}`)
   }
     
 }
@@ -251,30 +253,33 @@ class RaiderList extends Raider{
     );
   }
 
+  test(){
+    console.log(this)
+  }
+
   render(){
 
     const table = document.querySelector('#tablebod')
+
     for(const raider in this.raiders){
+
       const newRow = document.createElement('tr')
+
       newRow.innerHTML = `
         <td>${this.raiders[raider].character}</td>
         <td>${this.raiders[raider].classType}</td>
         <td>${this.raiders[raider].dkp}</td>
-        <td><button id="AddDkpBtn">Add DKP</button></td>
-        <td><button id="SubDkpBtn">Subtract DKP</button></td>
+        <button id="addBtn${this.raiders[raider].character}">Add DKP</button>
+        <button id="subBtn${this.raiders[raider].character}">Subtract DKP</button>
       `;
+
       table.append(newRow)
 
-      const addBtnHandler = document.querySelector('#AddDkpBtn')
-      const subBtnHandler = document.querySelector('#SubDkpBtn')
+      const addBtn = document.querySelector(`button#addBtn${this.raiders[raider].character}`)
+      const subBtn = document.querySelector(`button#subBtn${this.raiders[raider].character}`)
 
-      // addBtnHandler.addEventListener('click',console.dir(this.raiders[raider]))
-      // subBtnHandler.addEventListener('click',console.dir(this.raiders[raider]))
-
-      addBtnHandler.addEventListener('click',console.log(this).bind(this.raiders[raider]))
-      subBtnHandler.addEventListener('click',console.log(this).bind(this.raiders[raider]))
-
-      console.log(raider.character)
+      addBtn.addEventListener('click',this.dkpAdd.bind(this.raiders[raider]))
+      subBtn.addEventListener('click',this.dkpSubtract.bind(this.raiders[raider]))
     }
     
   }
