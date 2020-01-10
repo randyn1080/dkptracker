@@ -3,8 +3,10 @@
 // const items = {}
 // --------------
 
+// add logic to track DKP add and subtracts, definitely linked to the invividual raiders and also maybe boss or some other list
 
-class Boss{ // create a button to be displayed on page PER BOSS that when clicked will create a popup that will accept a CSV list of raiders.  When that input is accepted, distribute the dkpValue of the boss to everyone as a dkpGain.
+
+class Boss{ // create a button to be displayed on page PER BOSS that when clicked will create a popup that will accept a CSV/SemiColon list of raiders.  When that input is accepted, distribute the dkpValue of the boss to everyone as a dkpGain.
 
   // following that event, create a similar yet smaller (contained) popup of buttons containing the boss's loot table.  When a loot Item is clicked, create an input field to accept a Raider and a dkpVal to automatically pass to LootTransactions.purchase(Raider, Item, DkpVal).
 
@@ -33,14 +35,32 @@ class Boss{ // create a button to be displayed on page PER BOSS that when clicke
     )
   }
 
-  bossKill(raidersPresent) {
+  bossKill(raidersPresent) { // figure out how to convert it directly to a string, incase the original copy paste from WoW isn't in string form (containing ' ') but rather flat text.
+    const date = new Date()
+    console.log(raidersPresent)
+    listOfRaiders
     const raidersPres = raidersPresent.split(';')
-    for (const raiders of raidersPres) {
-      listOfRaiders[raiders].dkpAdd(this.dkpValue)
+    for (const raider of raidersPres) {
+      if(listOfRaiders[raider]){
+        listOfRaiders[raider].dkpAdd(this.dkpValue)
+        listOfRaiders[raider].dkpHistory.push({
+          Reason:`${this.bossName} Slain ${date.toLocaleString()}`,
+          Dkp:Math.abs(this.dkpValue)
+        })
+        console.log(`${listOfRaiders[raider].character} dkp increased from ${listOfRaiders[raider].dkp - this.dkpValue} to ${listOfRaiders[raider].dkp}`)
+      } else {
+        console.log(`${raider} not in database.`)
+      }
     }
+    console.log(`Congratulations on killing ${this.bossName}`)
   }
 
 }
+
+// listOfRaiders[purchaser].dkpHistory.push({
+//   Reason:'Loot Transaction',
+//   Dkp:-Math.abs(dkpValSpent)
+// })
 
 
 
@@ -50,12 +70,14 @@ class Raider {
   classType = String;
   dkp = Number;
   itemsPurchased = [];
+  dkpHistory = []
   
   constructor(character, classType, dkp){
     this.character = character;
     this.classType = classType;
     this.dkp = dkp; 
     this.itemsPurchased;
+    this.dkpHistory
   }
 
   createRaider(raiderName, classType, dkp) {
@@ -124,12 +146,22 @@ class Item {
 class LootTransactions { // add logic to adjust DKP based on the dkpValSpent for a purchased item
     
   static purchase(purchaser, itemPurchased, dkpValSpent) {
+
+    const date = new Date()
     
-    listOfItems[itemPurchased].dkpValHist.push({purchaser:purchaser, DkpValue:dkpValSpent});
+    listOfItems[itemPurchased].dkpValHist.push({
+      purchaser:purchaser, 
+      DkpValue:dkpValSpent
+    });
     
     listOfRaiders[purchaser].itemsPurchased.push(listOfItems[itemPurchased]);
     
     listOfRaiders[purchaser].dkpSubtract(dkpValSpent)
+
+    listOfRaiders[purchaser].dkpHistory.push({
+      Reason:`${itemPurchased} purchased ${date.toLocaleString()}`,
+      Dkp:-Math.abs(dkpValSpent)
+    })
     
   }
   
