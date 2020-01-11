@@ -327,8 +327,7 @@ class RaiderList extends Raider{
       const addBtn = document.querySelector(`button#addBtn${this.raiders[raider].character}`)
       const subBtn = document.querySelector(`button#subBtn${this.raiders[raider].character}`)
 
-      // these don't yet work.
-      // addBtn.addEventListener('click',this.dkpAdd.bind(this.raiders[raider]))
+      // Change these buttons to make Add (+) increase input field by increment of 1, sub to decrease by 1 and then add another button Adjust DKP to execute the addition or subtraction of DKP on the raider.  Then save the information as Dkp Adjustment by (logged in user / admin)
       subBtn.addEventListener('click',()=>{
         const subVal = subInput.value
         this.raiders[raider].dkpSubtract(+subVal)
