@@ -37,8 +37,6 @@ class Boss{ // create a button to be displayed on page PER BOSS that when clicke
 
   bossKill(raidersPresent) { // figure out how to convert it directly to a string, incase the original copy paste from WoW isn't in string form (containing ' ') but rather flat text.
     const date = new Date()
-    console.log(raidersPresent)
-    listOfRaiders
     const raidersPres = raidersPresent.split(';')
     for (const raider of raidersPres) {
       if(listOfRaiders[raider]){
@@ -56,11 +54,6 @@ class Boss{ // create a button to be displayed on page PER BOSS that when clicke
   }
 
 }
-
-// listOfRaiders[purchaser].dkpHistory.push({
-//   Reason:'Loot Transaction',
-//   Dkp:-Math.abs(dkpValSpent)
-// })
 
 
 
@@ -90,13 +83,21 @@ class Raider {
     }
     
   dkpSubtract(val) {
-    this.dkp = this.dkp - val
-    console.log(`Subtract called! for ${this.character}`)
+    if(val && typeof val === 'number'){
+      this.dkp = this.dkp - val
+      console.log(`Subtract called and executed for ${this.character} in the amount of ${-Math.abs(val)}`)
+    } else {
+      console.log(`Subtract called! for ${this.character}, but not inside with actual function`)
+    }
   }
     
   dkpAdd(val) {
-    this.dkp = this.dkp + val
-    console.log(`Add called! for ${this.character}`)
+    if(val && typeof val === 'number'){
+      this.dkp = this.dkp + val
+      console.log(`Add called and executed for ${this.character} in the amount of ${Math.abs(val)}`)
+    } else {
+      console.log(`Add called for ${this.character}, but not executed because something is wrong with val`)
+    }
   }
     
 }
@@ -215,10 +216,35 @@ class BossList extends Boss {
     );
   }
 
+  render() { // this will render a form? with a picture of the boss as a button and above it an input field to capture the raiders and then execute bossKill on whichever specific boss button is pressed, accepting the arguement from the tied in input field.
+    const appDiv = document.getElementById('app')
+    const theList = document.createElement('ul')
+    appDiv.append(theList)
+    for(const boss in this.bosses){
+      const newBossEl = document.createElement('li')
+      newBossEl.innerHTML = `
+        <div>
+          <h2>${this.bosses[boss].bossName}</h2>
+          <input id="inputField${this.bosses[boss].bossName}" type="string"></input>
+          <button id="btn${this.bosses[boss].bossName}">Boss Kill</button>
+        </div>
+      `;
+
+      theList.append(newBossEl)
+      const bossInput = document.querySelector(`input#inputField${this.bosses[boss].bossName}`)
+      const bossBtn = document.querySelector(`button#btn${this.bosses[boss].bossName}`)
+
+      bossBtn.addEventListener('click',()=>{
+        const addRaiderList = bossInput.value
+        this.bosses[boss].bossKill(addRaiderList)
+      })
+    }
+  }
+
 }
   
   
-  
+
 class RaiderList extends Raider{
     
   constructor() {
@@ -251,6 +277,24 @@ class RaiderList extends Raider{
       'Rogue',
       150
     );
+
+    this.createRaider(
+      'Kswiss',
+      'Shaman',
+      39
+    );
+
+    this.createRaider(
+      'Mirdath',
+      'Warrior',
+      0
+    );
+
+    this.createRaider(
+      'Mulli',
+      'Hunter',
+      141
+    )
   }
 
   test(){
@@ -269,17 +313,32 @@ class RaiderList extends Raider{
         <td>${this.raiders[raider].character}</td>
         <td>${this.raiders[raider].classType}</td>
         <td>${this.raiders[raider].dkp}</td>
+        <input id="addField${this.raiders[raider].character}" typeof="number"></input>
         <button id="addBtn${this.raiders[raider].character}">Add DKP</button>
+        <input id="subField${this.raiders[raider].character}" typeof="number"></input>
         <button id="subBtn${this.raiders[raider].character}">Subtract DKP</button>
       `;
 
       table.append(newRow)
 
+      const addInput = document.querySelector(`input#addField${this.raiders[raider].character}`)
+      const subInput = document.querySelector(`input#subField${this.raiders[raider].character}`)
+
       const addBtn = document.querySelector(`button#addBtn${this.raiders[raider].character}`)
       const subBtn = document.querySelector(`button#subBtn${this.raiders[raider].character}`)
 
-      addBtn.addEventListener('click',this.dkpAdd.bind(this.raiders[raider]))
-      subBtn.addEventListener('click',this.dkpSubtract.bind(this.raiders[raider]))
+      // these don't yet work.
+      // addBtn.addEventListener('click',this.dkpAdd.bind(this.raiders[raider]))
+      subBtn.addEventListener('click',()=>{
+        const subVal = subInput.value
+        this.raiders[raider].dkpSubtract(+subVal)
+      })
+
+      addBtn.addEventListener('click',()=> {
+        const addVal = addInput.value
+        this.raiders[raider].dkpAdd(+addVal)
+      })
+
     }
     
   }
@@ -406,6 +465,7 @@ bossList.populateBosses();
 const listOfBosses = bossList.bosses;
 
 raiderList.render()
+bossList.render()
 
 // ================================
 // need to understand how to make this work.  Possible it will only work once I begin to render things?
