@@ -313,29 +313,29 @@ class RaiderList extends Raider{
         <td>${this.raiders[raider].character}</td>
         <td>${this.raiders[raider].classType}</td>
         <td>${this.raiders[raider].dkp}</td>
-        <input id="addField${this.raiders[raider].character}" typeof="number"></input>
-        <button id="addBtn${this.raiders[raider].character}">Add DKP</button>
-        <input id="subField${this.raiders[raider].character}" typeof="number"></input>
-        <button id="subBtn${this.raiders[raider].character}">Subtract DKP</button>
+        <input id="adjField${this.raiders[raider].character}" typeof="number"></input>
+        <button id="adjBtn${this.raiders[raider].character}">Adjust DKP</button>
       `;
 
       table.append(newRow)
 
-      const addInput = document.querySelector(`input#addField${this.raiders[raider].character}`)
-      const subInput = document.querySelector(`input#subField${this.raiders[raider].character}`)
+      const adjInput = document.querySelector(`input#adjField${this.raiders[raider].character}`)
 
-      const addBtn = document.querySelector(`button#addBtn${this.raiders[raider].character}`)
-      const subBtn = document.querySelector(`button#subBtn${this.raiders[raider].character}`)
+      const adjBtn = document.querySelector(`button#adjBtn${this.raiders[raider].character}`)
 
       // Change these buttons to make Add (+) increase input field by increment of 1, sub to decrease by 1 and then add another button Adjust DKP to execute the addition or subtraction of DKP on the raider.  Then save the information as Dkp Adjustment by (logged in user / admin)
-      subBtn.addEventListener('click',()=>{
-        const subVal = subInput.value
-        this.raiders[raider].dkpSubtract(+subVal)
-      })
-
-      addBtn.addEventListener('click',()=> {
-        const addVal = addInput.value
-        this.raiders[raider].dkpAdd(+addVal)
+      adjBtn.addEventListener('click',()=> {
+        const adjVal = adjInput.value
+        console.log(adjVal)
+        if(adjVal === 0){
+          console.log('please add a value')
+        } else if(adjVal > 0){
+          this.raiders[raider].dkpAdd(+adjVal)
+          console.log('pos num')
+        } else if(adjVal < 0){
+          this.raiders[raider].dkpSubtract(+Math.abs(+adjVal)) //switch adjVal to a positive number to subtract from the players dkp.
+          console.log('neg num')
+        }
       })
 
     }

@@ -5,11 +5,10 @@ th {
 tbody tr td{
     border: 1px solid black;
     text-align: center;
-    background-color:darkslategray
 }
 
 tbody tr input{
-    width: 1.2rem
+    width: 1.5rem
 }
 
 ul li{
